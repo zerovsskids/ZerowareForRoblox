@@ -9099,36 +9099,6 @@ task.spawn(function()
 		AutoLeave.ToggleButton(false)
 	end
 end)
-
-shared.GlobalStore = store
-shared.GlobalBedwars = bedwars
-shared.VapeBWLoaded = true
-local function createMonitoredTable(originalTable, onChange)
-    local proxy = {}
-    local mt = {
-        __index = originalTable,
-        __newindex = function(t, key, value)
-            local oldValue = originalTable[key]
-            originalTable[key] = value
-            if onChange then
-                onChange(key, oldValue, value)
-            end
-        end
-    }
-    setmetatable(proxy, mt)
-    return proxy
-end
-local function onChange(key, oldValue, newValue)
-   --print("Changed key:", key, "from", oldValue, "to", newValue)
-    shared.GlobalStore = store
-end
-local function onChange2(key, oldValue, newValue)
-	--print("Changed key:", key, "from", oldValue, "to", newValue)
-	 shared.GlobalBedwars = bedwars
- end
-
-store = createMonitoredTable(store, onChange)
-bedwars = createMonitoredTable(bedwars, onChange2)
 run(function()
     local GuiLibrary = shared.GuiLibrary
 	local texture_pack = {};
